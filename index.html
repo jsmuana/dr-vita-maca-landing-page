@@ -389,6 +389,59 @@ button{cursor:pointer;font-family:var(--fb)}
 .testi-card:active{transform:scale(0.97)}
 
 
+
+/* ===== REVIEW MODAL ===== */
+#reviewMo{
+  display:none;position:fixed;z-index:310;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(440px,calc(100vw - 24px));
+  background:#fff;border-radius:20px;
+  padding:32px 28px;
+  box-shadow:0 32px 80px rgba(0,0,0,.28);
+  max-height:90vh;overflow-y:auto;
+}
+#reviewMo.on{display:block}
+.rev-title{font-family:var(--fh);font-size:32px;color:#111;margin-bottom:6px}
+.rev-sub{font-size:13px;color:#888;margin-bottom:20px}
+.rev-section{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin:16px 0 8px}
+.rev-row{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid #f0f0f0;gap:12px}
+.rev-row:last-child{border-bottom:none}
+.rev-lbl{font-size:12px;font-weight:700;color:#888;flex-shrink:0}
+.rev-val{font-size:13px;font-weight:600;color:#222;text-align:right}
+.rev-pack-box{background:#fff8f0;border:1px solid rgba(247,148,29,.2);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.rev-pack-box img{width:60px;height:60px;object-fit:contain;border-radius:8px;border:1px solid rgba(247,148,29,.2);background:#fff;padding:4px}
+.rev-pack-name{font-size:15px;font-weight:800;color:#111;margin-bottom:2px}
+.rev-pack-sub{font-size:12px;color:#888}
+.rev-total{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;margin-top:8px}
+.rev-total-lbl{font-size:14px;font-weight:700;color:#333}
+.rev-total-price{font-family:var(--fh);font-size:36px;color:#111}
+.rev-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.btn-confirm-order{width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-d));color:#fff;font-family:var(--fb);font-size:16px;font-weight:800;padding:16px;border:none;border-radius:10px;cursor:pointer;box-shadow:0 8px 24px rgba(247,148,29,.3);transition:all .2s}
+.btn-confirm-order:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(247,148,29,.4)}
+.btn-edit-order{width:100%;background:#f5f5f5;color:#555;font-family:var(--fb);font-size:14px;font-weight:700;padding:13px;border:none;border-radius:10px;cursor:pointer;transition:all .2s}
+.btn-edit-order:hover{background:#eee}
+
+
+/* ===== REVIEW MODAL ===== */
+#reviewMo{display:none;position:fixed;z-index:310;top:50%;left:50%;transform:translate(-50%,-50%);width:min(440px,calc(100vw - 24px));background:#fff;border-radius:20px;padding:32px 28px;box-shadow:0 32px 80px rgba(0,0,0,.28);max-height:90vh;overflow-y:auto;}
+#reviewMo.on{display:block}
+.rev-title{font-family:var(--fh);font-size:32px;color:#111;margin-bottom:4px}
+.rev-sub{font-size:13px;color:#888;margin-bottom:18px}
+.rev-pack-box{background:#fff8f0;border:1px solid rgba(247,148,29,.2);border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.rev-pack-box img{width:56px;height:56px;object-fit:contain;border-radius:8px;background:#fff;padding:4px;border:1px solid rgba(247,148,29,.15)}
+.rev-pack-name{font-size:15px;font-weight:800;color:#111;margin-bottom:2px}
+.rev-pack-sub{font-size:12px;color:#888}
+.rev-sec{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin:14px 0 6px}
+.rev-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f0f0;gap:12px}
+.rev-row:last-child{border-bottom:none}
+.rev-lbl{font-size:12px;font-weight:700;color:#aaa;flex-shrink:0}
+.rev-val{font-size:13px;font-weight:600;color:#222;text-align:right}
+.rev-total-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;margin-top:6px;border-top:2px solid #eee}
+.rev-total-lbl{font-size:14px;font-weight:700;color:#333}
+.rev-total-amt{font-family:var(--fh);font-size:36px;color:#111}
+.btn-confirm-final{width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-d));color:#fff;font-family:var(--fb);font-size:16px;font-weight:800;padding:16px;border:none;border-radius:10px;cursor:pointer;margin-top:18px;box-shadow:0 8px 24px rgba(247,148,29,.3);transition:all .2s}
+.btn-edit-back{width:100%;background:#f5f5f5;color:#666;font-family:var(--fb);font-size:14px;font-weight:700;padding:13px;border:none;border-radius:10px;cursor:pointer;margin-top:8px}
+
 </style>
 <script src="https://fast.wistia.com/player.js" async></script>
 <script src="https://fast.wistia.com/embed/1lachkr75l.js" async type="module"></script>
@@ -884,14 +937,21 @@ function validate(){
 document.getElementById('coForm').addEventListener('input',function(){document.getElementById('fErr').textContent='';validate();});
 document.getElementById('coForm').addEventListener('change',validate);
 
-document.getElementById('submitBtn').addEventListener('click',function(){
-  if(!validate())return;
+/* submit handled below */;
+
+function closeReview(){
+  document.getElementById('reviewMo').classList.remove('on');
+  document.getElementById('overlay').classList.remove('on');
+}
+
+document.getElementById('confirmOrderBtn').addEventListener('click',function(){
   var btn=this; btn.disabled=true; btn.textContent='Processing...';
   var ref='DVM-'+Date.now().toString(36).toUpperCase();
   var name=document.getElementById('fName').value.trim();
   var data={reference:ref,name:name,phone:document.getElementById('fPhone').value.trim(),email:document.getElementById('fEmail').value.trim(),address:document.getElementById('fAddr').value.trim(),city:document.getElementById('fCity').value.trim(),province:document.getElementById('fProv').value.trim(),landmark:document.getElementById('fLand').value.trim(),pack:curPack.name,qty:qty,total:curPack.price*qty,payment:'Cash on Delivery'};
   function showConfirm(){
     btn.disabled=false;
+    closeReview();
     closeCO();
     document.getElementById('cName').textContent=name.split(' ')[0];
     document.getElementById('cRef').textContent=ref;
@@ -908,9 +968,7 @@ document.getElementById('submitBtn').addEventListener('click',function(){
     } else {
       showConfirm();
     }
-  } catch(e) {
-    showConfirm();
-  }
+  } catch(e){ showConfirm(); }
 });
 function closeConf(){
   document.getElementById('confirmMo').classList.remove('on');
@@ -991,6 +1049,73 @@ document.addEventListener('keydown', function(e){
 });
 /* fade transition handled in CSS */
 
+
+/* ===== REVIEW MODAL ===== */
+document.getElementById('submitBtn').addEventListener('click', function() {
+  if (!validate()) return;
+  document.getElementById('revImg').src = curPack.img || '';
+  document.getElementById('revPack').textContent = curPack.name;
+  document.getElementById('revPackSub').textContent = curPack.sub;
+  document.getElementById('revName').textContent = document.getElementById('fName').value.trim();
+  document.getElementById('revPhone').textContent = document.getElementById('fPhone').value.trim();
+  var em = document.getElementById('fEmail').value.trim();
+  document.getElementById('revEmail').textContent = em || '—';
+  document.getElementById('revAddr').textContent = document.getElementById('fAddr').value.trim();
+  document.getElementById('revCity').textContent = document.getElementById('fCity').value.trim();
+  document.getElementById('revProv').textContent = document.getElementById('fProv').value.trim();
+  var lm = document.getElementById('fLand').value.trim();
+  document.getElementById('revLand').textContent = lm || '—';
+  document.getElementById('revQty').textContent = qty;
+  document.getElementById('revTotal').textContent = fmt(curPack.price * qty);
+  // Hide order modal, show review on top
+  document.getElementById('modal').classList.remove('on');
+  document.getElementById('reviewMo').classList.add('on');
+});
+
+document.getElementById('btnEditBack').addEventListener('click', function() {
+  document.getElementById('reviewMo').classList.remove('on');
+  document.getElementById('modal').classList.add('on');
+});
+
+document.getElementById('btnFinalConfirm').addEventListener('click', function() {
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+  var ref = 'DVM-' + Date.now().toString(36).toUpperCase();
+  var name = document.getElementById('fName').value.trim();
+  var data = {
+    reference: ref, name: name,
+    phone: document.getElementById('fPhone').value.trim(),
+    email: document.getElementById('fEmail').value.trim(),
+    address: document.getElementById('fAddr').value.trim(),
+    city: document.getElementById('fCity').value.trim(),
+    province: document.getElementById('fProv').value.trim(),
+    landmark: document.getElementById('fLand').value.trim(),
+    pack: curPack.name, qty: qty,
+    total: curPack.price * qty, payment: 'Cash on Delivery'
+  };
+  function showConfirm() {
+    btn.disabled = false;
+    document.getElementById('reviewMo').classList.remove('on');
+    closeCO();
+    document.getElementById('cName').textContent = name.split(' ')[0];
+    document.getElementById('cRef').textContent = ref;
+    document.getElementById('cPack').textContent = curPack.name;
+    document.getElementById('cQty').textContent = qty;
+    document.getElementById('cTotal').textContent = fmt(curPack.price * qty);
+    document.getElementById('confirmMo').classList.add('on');
+    document.getElementById('overlay').classList.add('on');
+    document.body.style.overflow = 'hidden';
+  }
+  try {
+    if (SHEET && SHEET !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      fetch(SHEET, {method:'POST', body: JSON.stringify(data)}).then(showConfirm).catch(showConfirm);
+    } else {
+      showConfirm();
+    }
+  } catch(e) { showConfirm(); }
+});
+
 </script>
 
 <!-- LIGHTBOX -->
@@ -1001,6 +1126,77 @@ document.addEventListener('keydown', function(e){
     <img id="lbImg" src="" alt="Testimonial">
     <button class="lightbox-nav lb-next" onclick="lbNav(1)">›</button>
   </div>
+</div>
+
+
+<!-- REVIEW MODAL -->
+<div id="reviewMo">
+  <div class="rev-title">Review Order</div>
+  <div class="rev-sub">I-check ang iyong details bago i-confirm.</div>
+
+  <div class="rev-pack-box">
+    <img id="revPackImg" src="" alt="Product">
+    <div>
+      <div class="rev-pack-name" id="revPackName">—</div>
+      <div class="rev-pack-sub" id="revPackSub">—</div>
+    </div>
+  </div>
+
+  <div class="rev-section">Personal Info</div>
+  <div class="rev-row"><span class="rev-lbl">Name</span><span class="rev-val" id="revName">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Phone</span><span class="rev-val" id="revPhone">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Email</span><span class="rev-val" id="revEmail">—</span></div>
+
+  <div class="rev-section">Shipping Address</div>
+  <div class="rev-row"><span class="rev-lbl">Address</span><span class="rev-val" id="revAddr">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">City</span><span class="rev-val" id="revCity">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Province</span><span class="rev-val" id="revProv">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Landmark</span><span class="rev-val" id="revLand">—</span></div>
+
+  <div class="rev-section">Payment</div>
+  <div class="rev-row"><span class="rev-lbl">Method</span><span class="rev-val">Cash on Delivery</span></div>
+  <div class="rev-row"><span class="rev-lbl">Qty</span><span class="rev-val" id="revQty">1</span></div>
+
+  <div class="rev-total">
+    <span class="rev-total-lbl">Total</span>
+    <span class="rev-total-price" id="revTotal">—</span>
+  </div>
+
+  <div class="rev-actions">
+    <button class="btn-confirm-order" id="confirmOrderBtn">Confirm Order →</button>
+    <button class="btn-edit-order" onclick="closeReview()">← Edit Details</button>
+  </div>
+</div>
+
+
+<!-- REVIEW MODAL -->
+<div id="reviewMo">
+  <div class="rev-title">Review Order</div>
+  <div class="rev-sub">I-check ang iyong details bago i-confirm.</div>
+  <div class="rev-pack-box">
+    <img id="revImg" src="" alt="Product">
+    <div>
+      <div class="rev-pack-name" id="revPack">—</div>
+      <div class="rev-pack-sub" id="revPackSub">—</div>
+    </div>
+  </div>
+  <div class="rev-sec">Personal Info</div>
+  <div class="rev-row"><span class="rev-lbl">Name</span><span class="rev-val" id="revName">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Phone</span><span class="rev-val" id="revPhone">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Email</span><span class="rev-val" id="revEmail">—</span></div>
+  <div class="rev-sec">Shipping</div>
+  <div class="rev-row"><span class="rev-lbl">Address</span><span class="rev-val" id="revAddr">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">City</span><span class="rev-val" id="revCity">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Province</span><span class="rev-val" id="revProv">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Landmark</span><span class="rev-val" id="revLand">—</span></div>
+  <div class="rev-row"><span class="rev-lbl">Payment</span><span class="rev-val">Cash on Delivery</span></div>
+  <div class="rev-row"><span class="rev-lbl">Qty</span><span class="rev-val" id="revQty">—</span></div>
+  <div class="rev-total-row">
+    <span class="rev-total-lbl">Total</span>
+    <span class="rev-total-amt" id="revTotal">—</span>
+  </div>
+  <button class="btn-confirm-final" id="btnFinalConfirm">Confirm Order →</button>
+  <button class="btn-edit-back" id="btnEditBack">← Edit Details</button>
 </div>
 
 </body>
